@@ -1,29 +1,28 @@
-import math
 import unittest
 from Function import *
 
 
 class FunctionTest(unittest.TestCase):
+    _one = cf(1)
+    _opf = cf(1.5)
+    _iden = pf(1)
+    _x_sq = pf(2)
+
     def test_cf(self):
-        const = 2.5
-        func = cf(const)
-        self.assertEqual(func(1), const)
-        self.assertEqual(func.deri_at(1), 0)
-        self.assertEqual(func.strp, str(const))
+        self.assertEqual(FunctionTest._one(12), 1)
+        self.assertEqual(FunctionTest._one.deri_at(56), 0)
+        self.assertEqual(FunctionTest._opf.strp, str(1.5))
 
     def test_pf(self):
-        power = 2
-        func = pf(power)
-        self.assertEqual(func(2), 4)
-        self.assertEqual(func.deri_at(2), 4)
-        self.assertEqual(func.strp, f"x^{power}")
+        self.assertEqual(FunctionTest._x_sq(2), 4)
+        self.assertEqual(FunctionTest._x_sq.deri_at(2), 4)
+        self.assertEqual(FunctionTest._x_sq.strp, "x^2")
 
     def test_sinf(self):
-        func = pf(1)
-        sin_func = sinf(func)
-        self.assertAlmostEqual(sin_func(math.pi), math.sin(math.pi))
-        self.assertAlmostEqual(sin_func.deri_at(math.pi), math.cos(func(math.pi)) * func.deri_at(math.pi))
-        self.assertEqual(sin_func.strp, f"sin({func.strp})")
+        sin_func = sinf(FunctionTest._iden)
+        self.assertAlmostEqual(sin_func(math.pi), 0)
+        self.assertAlmostEqual(sin_func.deri_at(math.pi), -1)
+        self.assertEqual(sin_func.strp, "sin(x^1)")
 
     def test_cosf(self):
         func = cf(1)
@@ -81,16 +80,16 @@ class FunctionTest(unittest.TestCase):
         f3 = sinx
         f4 = sinf(f1)
         f5 = f2.composition(f4)
-        result = f3.composition(f2) #sin(x^3)
+        result = f3.composition(f2)  # sin(x^3)
 
-        self.assertAlmostEqual(result(math.sqrt(math.pi)), 0 )
-        self.assertAlmostEqual(result.deri_at(math.sqrt(math.pi)), math.cos(math.pi) * 2 * math.sqrt(math.pi) )
+        self.assertAlmostEqual(result(math.sqrt(math.pi)), 0)
+        self.assertAlmostEqual(result.deri_at(math.sqrt(math.pi)), math.cos(math.pi) * 2 * math.sqrt(math.pi))
         self.assertEqual(result.strp, "sin(x^2)")
 
-        self.assertEqual(f5(6.7), f5(8.3) )
-        self.assertAlmostEqual(f5(3.4) , 1/2)
-        self.assertAlmostEqual(f5.deri_at(7.9), 0 )
-        self.assertEqual(f5.strp, "sin(0.7853981633974483) ^ 2")
+        self.assertEqual(f5(6.7), f5(8.3))
+        self.assertAlmostEqual(f5(3.4), 1 / 2)
+        self.assertAlmostEqual(f5.deri_at(7.9), 0)
+        self.assertEqual(f5.strp, "sin(0.7853981633974483)^2")
 
 
 print(__name__)
