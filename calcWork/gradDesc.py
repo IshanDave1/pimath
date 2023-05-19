@@ -2,11 +2,11 @@ import logging
 from typing import Callable
 from Vector import Vector
 
-#logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 delta = 0.001
 
 
-def gd_general(f: Callable[[Vector], float], guess: Vector, lr: float = 0.1, threshold: float = 0.01):
+def gd_general(f: Callable[[Vector], float], guess: Vector, lr: float = 0.1, threshold: float = 0.01) -> Vector:
     def ivec(index, length):
         return Vector(*[delta if i == index else 0 for i in range(length)])
 
