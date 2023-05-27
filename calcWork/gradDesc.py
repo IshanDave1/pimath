@@ -1,8 +1,9 @@
+# exec(open('C:/Users/win 10/Desktop/Projects/Python/pimath/calcWork/Vector.py').read())
 import logging
 from typing import Callable
 from Vector import Vector
 
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
 delta = 0.001
 
 

@@ -21,8 +21,7 @@ class Function:
             deri_at = self.deri_at
             strp = f"({self.strp} + {other})"
             return Function(val_at, deri_at, strp)
-        else:
-            raise TypeError("Unsupported operand type(s) for +")
+        return NotImplemented
 
     def __mul__(self, other):
         if isinstance(other, Function):
@@ -35,8 +34,7 @@ class Function:
             deri_at = lambda x: self.deri_at(x) * other
             strp = f"({self.strp} * {other})"
             return Function(val_at, deri_at, strp)
-        else:
-            raise TypeError("Unsupported operand type(s) for *")
+        return NotImplemented
 
     def __sub__(self, other):
         if isinstance(other, Function):
@@ -49,8 +47,7 @@ class Function:
             deri_at = self.deri_at
             strp = f"({self.strp} - {other})"
             return Function(val_at, deri_at, strp)
-        else:
-            raise TypeError("Unsupported operand type(s) for -")
+        return NotImplemented
 
     def __rmul__(self, other):
         return self.__mul__(other)
@@ -59,7 +56,7 @@ class Function:
         if isinstance(other, Function):
             val_at = lambda x: self(x) / other(x)
             deri_at = lambda x: (self.deri_at(x) * other(x) - self(x) * other.deri_at(x)) / (
-                    other(x) ** 2)
+                other(x) ** 2)
             strp = f"({self.strp} / {other.strp})"
             return Function(val_at, deri_at, strp)
         elif isinstance(other, (int, float)):
@@ -67,8 +64,7 @@ class Function:
             deri_at = lambda x: self.deri_at(x) / other
             strp = f"({self.strp} / {other})"
             return Function(val_at, deri_at, strp)
-        else:
-            raise TypeError("Unsupported operand type(s) for /")
+        return NotImplemented
 
     def __repr__(self):
         return self.strp
@@ -102,4 +98,4 @@ def cosf(func):
 
 
 sinx = Function(lambda x: math.sin(x), lambda x: math.cos(x), "sin(x)")
-cosx = Function(lambda x: math.cos(x), lambda x: -1 * math.sin(x), "sin(x)")
+cosx = Function(lambda x: math.cos(x), lambda x: -1 * math.sin(x), "cos(x)")

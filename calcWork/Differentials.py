@@ -1,4 +1,5 @@
 from math import *
+# exec(open('C:/Users/win 10/Desktop/Projects/Python/pimath/calcWork/Vector.py').read())
 from Function import *
 
 

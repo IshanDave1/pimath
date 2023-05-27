@@ -12,25 +12,53 @@ class Vector:
         return f"Vector({str(self.params)[1:-1]})"
 
     def __add__(self, other: 'Vector') -> 'Vector':
-        if len(self.params) != len(other.params):
-            raise ValueError("Vector lengths are not compatible for addition.")
-        return Vector(*[self.params[i] + other.params[i] for i in range(len(self.params))])
+        if isinstance(other, (int, float)):
+            return Vector(*[self.params[i] + other for i in range(len(self.params))])
+        elif isinstance(other, Vector):
+            if len(self.params) != len(other.params):
+                raise ValueError("Vector lengths are not compatible for addition.")
+            else:
+                return Vector(*[self.params[i] + other.params[i] for i in range(len(self.params))])
+        else:
+            raise TypeError("Unsupported operand type for addition.")
 
-    def __sub__(self, other) -> 'Vector':
-        if len(self.params) != len(other.params):
-            raise ValueError("Vector lengths are not compatible for sub.")
-        return Vector(*[self.params[i] - other.params[i] for i in range(len(self.params))])
+    def __sub__(self, other: 'Vector') -> 'Vector':
+        if isinstance(other, (int, float)):
+            return Vector(*[self.params[i] - other for i in range(len(self.params))])
+        elif isinstance(other, Vector):
+            if len(self.params) != len(other.params):
+                raise ValueError("Vector lengths are not compatible for subtraction.")
+            else:
+                return Vector(*[self.params[i] - other.params[i] for i in range(len(self.params))])
+        else:
+            raise TypeError("Unsupported operand type for subtraction.")
 
     def dot(self, other) -> float:
         if len(self.params) != len(other.params):
             raise ValueError("Vector lengths are not compatible for dot.")
         return sum(self.params[i] * other.params[i] for i in range(len(self.params)))
 
-    def __mul__(self, scalar) -> 'Vector':
-        return Vector(*[ai * scalar for ai in self.params])
+    def __mul__(self, other) -> 'Vector':
+        if isinstance(other, (int, float)):
+            return Vector(*[self.params[i] * other for i in range(len(self.params))])
+        elif isinstance(other, Vector):
+            if len(self.params) != len(other.params):
+                raise ValueError("Vector lengths are not compatible for element-wise multiplication.")
+            else:
+                return Vector(*[self.params[i] * other.params[i] for i in range(len(self.params))])
+        else:
+            raise TypeError("Unsupported operand type for multiplication.")
 
-    def __truediv__(self, scalar) -> 'Vector':
-        return Vector(*[ai / scalar for ai in self.params])
+    def __truediv__(self, other) -> 'Vector':
+        if isinstance(other, (int, float)):
+            return Vector(*[self.params[i] / other for i in range(len(self.params))])
+        elif isinstance(other, Vector):
+            if len(self.params) != len(other.params):
+                raise ValueError("Vector lengths are not compatible for element-wise division.")
+            else:
+                return Vector(*[self.params[i] / other.params[i] for i in range(len(self.params))])
+        else:
+            raise TypeError("Unsupported operand type for division.")
 
     def __len__(self):
         return len(self.params)
